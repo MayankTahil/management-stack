@@ -1,6 +1,8 @@
 
 > **Note:** This repo is currently still underdevelopment. Please feel free to contribute via pull requests. 
 
+> **Pre-Req:** Only thing required prior to deploying this project is an Ubuntu machine which you can SSH into and 10 free IP's on your local subnet. 
+
 # Overview
 
 * Management Services
