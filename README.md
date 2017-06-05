@@ -1,7 +1,7 @@
 
 > **Note:** This repo is currently still underdevelopment. Please feel free to contribute via pull requests. 
 
-> **Pre-Req:** Only thing required prior to deploying this project is an Ubuntu machine which you can SSH into and 10 free IP's on your local subnet. 
+> **Pre-Req:** Only thing required prior to deploying this project is an Ubuntu machine with atleast one interface (eth0) which you can SSH into and have 10 free IP's (X.X.X.22 - X.X.X.31) on your local subnet. 
 
 # Overview
 
