@@ -24,7 +24,8 @@ export GUAC_CONF='/mgmt_data/guac/conf'
 export GUAC_DATA='/mgmt_data/guac'
 
 ## XenOrchestra Variables
-export XO_DATA='/mgmt_data/xo'
+export XO_DATA='/mgmt_data/xo/conf'
+export REDIS_DATA='/mgmt_data/xo/redis'
 
 ## IPAM Variables
 export IPAM_SQL='/mgmt_data/ipam/sql'

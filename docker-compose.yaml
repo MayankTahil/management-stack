@@ -86,23 +86,15 @@ services:
   
   # XenOrchestra service for Host communication
   xenorchstra:
-    image: "tianon/xen-orchestra"
-    restart: always
-    links:
-      - redis
+    image: "gh2k/xen-orchestra:latest"
+    volumes: 
+      - ".${REDIS_DATA}:/var/lib/redis"
+      - "${XO_DATA}:/var/lib/xo-server"
+    restart: always 
     networks:
       LAN:
         ipv4_address: "${NET}.26"
-      private:
     hostname: xo
-  redis:
-    image: "redis:3-alpine"
-    restart: always
-    volumes:
-      - "${XO_DATA}:/data"
-    networks:
-      private:
-    hostname: redis
   
   # IPAM service for network IP mgmgt
   mariadb:
