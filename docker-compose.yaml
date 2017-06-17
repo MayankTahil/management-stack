@@ -86,16 +86,23 @@ services:
   
   # XenOrchestra service for Host communication
   xenorchstra:
-    image: "gh2k/xen-orchestra:latest"
-    volumes: 
-      - "${REDIS_DATA}:/var/lib/redis"
-      - "${XO_DATA}:/var/lib/xo-server"
-    restart: always 
+    image: yobasystems/alpine-xen-orchestra:latest
+    links:
+      - redis
+    volumes:
+      - ${XO_DATA}:/app/data
     networks:
       LAN:
         ipv4_address: "${NET}.26"
-    hostname: xo
-  
+      private:
+  redis:
+    image: redis:alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - ${REDIS_DATA}:/data
+    networks:
+      private:
+
   # IPAM service for network IP mgmgt
   mariadb:
     image: mariadb:latest

@@ -31,16 +31,16 @@ echo "Checking to see if data directories exist"
 if [ ! -d "$DIRECTORY" ]; then
 	echo "Directories do NOT exist. They are now being created"
   # Control will enter here if $DIRECTORY doesn't exist.
-	mkdir -p $LDAP_DB
-	mkdir -p $LDAP_CONF
-	mkdir -p $DNS_DATA
-	mkdir -p $GUAC_DATA
-	mkdir -p $GUAC_CONF
-	mkdir -p $XO_DATA
-	mkdir -p $IPAM_SQL
-	mkdir -p $DHCP_CONF # Need to set an example of this file that needs to be copied to the directory eventually
-	touch $DHCP_CONF/dhcpd.conf
-	mv /management-stack/initdb.sql $GUAC_CONF/initdb.sql
+	mkdir -p "$LDAP_DB"
+	mkdir -p "$LDAP_CONF"
+	mkdir -p "$DNS_DATA"
+	mkdir -p "$GUAC_DATA"
+	mkdir -p "$GUAC_CONF"
+	mkdir -p "$XO_DATA"
+	mkdir -p "$IPAM_SQL"
+	mkdir -p "$DHCP_CONF" # Need to set an example of this file that needs to be copied to the directory eventually
+	touch "$DHCP_CONF/dhcpd.conf"
+	mv initdb.sql "$GUAC_CONF/initdb.sql"
 fi
 
 # Initiate Docker Swarm for service management --- TO DO ---

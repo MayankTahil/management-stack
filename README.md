@@ -107,7 +107,7 @@ Onced logged in, navigate to the DNS and DHCP configuration panes and configure 
 ## [Guacamole](https://github.com/Zuhkov/docker-containers/tree/master/guacamole) ##
 Guacamole is a clientless remote desktop gateway. It supports standard protocols like VNC and RDP. We call it clientless because no plugins or client software are required. Thanks to HTML5, once Guacamole is installed on a server, all you need to access your desktops is a web browser.
 
-> To access Guacamole, navigate to `http://X.X.X.25:8080`
+> To access Guacamole, navigate to `http://X.X.X.25:8080/guacamole/`
 
 **Username**: guacadmin
 
