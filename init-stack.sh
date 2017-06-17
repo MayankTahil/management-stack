@@ -40,7 +40,7 @@ if [ ! -d "$DIRECTORY" ]; then
 	mkdir -p "$IPAM_SQL"
 	mkdir -p "$DHCP_CONF" # Need to set an example of this file that needs to be copied to the directory eventually
 	touch "$DHCP_CONF/dhcpd.conf"
-	mv initdb.sql "$GUAC_CONF/initdb.sql"
+	cp initdb.sql "$GUAC_CONF/initdb.sql"
 fi
 
 # Initiate Docker Swarm for service management --- TO DO ---
