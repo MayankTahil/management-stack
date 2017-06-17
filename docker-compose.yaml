@@ -39,7 +39,7 @@ services:
       - PHPLDAPADMIN_LDAP_HOSTS=openldap
     volumes:
         - ${DNS_DATA}:/data:rw
-        - ${DHCP_CONF}:/etc/dhcp/dhcpd.conf:rw
+        #- ${DHCP_CONF}:/etc/dhcp/dhcpd.conf:rw
     networks:
       LAN:
         ipv4_address: "${NET}.24"
@@ -88,7 +88,7 @@ services:
   xenorchstra:
     image: "gh2k/xen-orchestra:latest"
     volumes: 
-      - ".${REDIS_DATA}:/var/lib/redis"
+      - "${REDIS_DATA}:/var/lib/redis"
       - "${XO_DATA}:/var/lib/xo-server"
     restart: always 
     networks:
