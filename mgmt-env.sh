@@ -1,7 +1,7 @@
 # Adjustable Environment Variables. Change the following variable to suit your needs
 
 export PASS='Password01'
-export NET='172.16.0'  #First three octets of your LAN network
+export NET='172.16.0'  #First three octets of your LAN network -- Assuming it's a /24 
 export GATEWAY='172.16.0.1' # Gateway to internet
 export DOMAIN='citrix.lab' # Desired domain for LDAP
 export DATA='/mgmt_data' # Directory to keep all persistent data
@@ -24,7 +24,6 @@ export DNS_DATA="$DATA/dns"
 export DHCP_CONF="$DATA/dhcp"
 
 ## Guacamole Variables
-export GUAC_CONF="$DATA/guac/conf"
 export GUAC_DATA="$DATA/guac"
 
 ## XenOrchestra Variables
