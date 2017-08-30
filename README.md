@@ -41,11 +41,10 @@ This project will deploy the following services:
 
 On a clean install of Ubuntu do the following **3** steps: 
 
-**Step 1:** Enter the following commands: 
+**Step 1:** Enter the following command: 
 
 ```
-git config --global http.sslVerify false
-git clone https://git.americasreadiness.com/Citrix/management-stack.git
+git clone https://github.com/Citrix-TechSpecialist/management-stack.git
 ```
 
 **Step 2:** Open up the `mgmt-env.sh` file within the `management-stack` directory and personalize the variables at the top of the file with any text editor like `nano` or `vi`. 
