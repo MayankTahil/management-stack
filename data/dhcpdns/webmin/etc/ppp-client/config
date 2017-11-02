@@ -1,0 +1,3 @@
+file=/etc/wvdial.conf
+wvdialconf=wvdialconf
+wvdial=wvdial

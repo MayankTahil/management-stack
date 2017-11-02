@@ -11,24 +11,26 @@ export DATA='/mgmt_data' # Directory to keep all persistent data
 ## Default host network interface to use to share same L2 network with containers. 
 export ETH='eth0' # Interface for macvland driver to create Docker Network with
 
+########
 #### Static Variables to store persistent service data.
+########
 
-## LDAP Variables
+## LDAP Variables --- These directories should be initially empty before starting the stack
 export LDAP_DB="$DATA/ldap/db"
 export LDAP_CONF="$DATA/ldap/config"
 
-## Bind_DNS Variables
-export DNS_DATA="$DATA/dns"
+## DNS, DHCP, and Webmin Persistent data --- These directories should be Pre-populated with your ISC DHCP dhcpd.conf file before starting the stack. See Example directory.
+export DHCPDNS_DATA="$DATA/dhcpdns"
 
-## ISC_DHCP Configfile
-export DHCP_CONF="$DATA/dhcp"
-
-## Guacamole Variables
+## Guacamole Variables --- These directories should be initially empty before starting the stack
 export GUAC_DATA="$DATA/guac"
 
-## XenOrchestra Variables
+## XenOrchestra Variables --- These directories should be initially empty before starting the stack
 export XO_DATA="$DATA/xo/conf"
 export REDIS_DATA="$DATA/xo/redis"
 
-## IPAM Variables
-export IPAM_SQL="$DATA/ipam/sql"
+## Cloud-Drive Variables --- These directories cab be initially empty before starting the stack. You can add/remove files as desired to host for simple download within the LAN network. See example directory
+export CLOUD_DRIVE="$DATA/cloud-drive"
+
+## TFTP Variables --- These directories cab be initially empty before starting the stack. You can add/remove files as desired to host for simple download within the LAN network. See example directory
+export TFTP_DATA="$DATA/tftp"

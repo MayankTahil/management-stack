@@ -1,0 +1,5 @@
+base_ppid=1
+cut_length=80
+trace_java=0
+ps_style=linux
+default_mode=last

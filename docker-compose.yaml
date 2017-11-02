@@ -18,7 +18,7 @@ services:
         ipv4_address: "${NET}.22"
     hostname: ldap-host
   
-  # LDAP Web GUI on 172.16.10.3
+  # LDAP Web GUI
   ldap-gui: 
     image: "osixia/phpldapadmin:0.6.12"
     links:
@@ -32,121 +32,101 @@ services:
     hostname: ldap-gui
 
   # DNS/DHCP Server
-  dhcpdns: 
+  dhcpdns:
     image: "mayankt/dhcpdns"
     restart: always
-    environment:
-      - PHPLDAPADMIN_LDAP_HOSTS=openldap
     volumes:
-        - ${DNS_DATA}:/data:rw
-        #- ${DHCP_CONF}:/etc/dhcp/dhcpd.conf:rw
+        - ${DHCPDNS_DATA}:/data:rw
     networks:
       LAN:
         ipv4_address: "${NET}.24"
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+      - "67:67/udp"
+      - "68:68/udp"
+      - "10000:10000/tcp"
     hostname: dhcpdns
 
-
-  # Guacamole service for Robust Backdoor access
-  guacamole:
+  # Guacamole services for Robust Backdoor access
+  guac:
     image: db260179/guacamole-combined
-    restart: always
     volumes:
-      - ${GUAC_DATA}:/app/data
+      - ${GUAC_DATA}:/app/data:rw
+    networks:
+      mgmt:
+    mem_limit: 500m
+    memswap_limit: 500m
+    mem_reservation: 300m
     networks:
       LAN:
         ipv4_address: "${NET}.25"
-    hostname: guacamole
+    hostname: guac
   
   # XenOrchestra service for Host communication
-  xenorchstra:
-    image: yobasystems/alpine-xen-orchestra:latest
-    links:
-      - redis
+  xo:
+    image: brijohn/xen-orchestra
+    ports:
+      - "127.0.0.1:8000:8000/tcp"
     volumes:
-      - ${XO_DATA}:/app/data
+      - ${REDIS_DATA}:/var/lib/redis:rw
+      - ${XO_DATA}:/var/lib/xo-server:rw
     networks:
       LAN:
         ipv4_address: "${NET}.26"
-      private:
-  redis:
-    image: redis:alpine
-    command: redis-server --appendonly yes
-    volumes:
-      - ${REDIS_DATA}:/data
-    networks:
-      private:
+    hostname: xo
 
-  # IPAM service for network IP mgmgt
-  mariadb:
-    image: mariadb:latest
-    volumes:
-      - "${IPAM_SQL}:/var/lib/mysql:rw"
-    environment:
-      - MYSQL_ROOT_PASSWORD=${PASS}
-      - MYSQL_DATABASE=phpipam
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=${PASS}
-    restart: always
-    networks:
-      private:
-    hostname: mariadb
-  phpipam:
-    image: rafpe/docker-phpipam
-    environment:
-      - MYSQL_DB_HOSTNAME=mariadb
-      - MYSQL_DB_USERNAME=root
-      - MYSQL_DB_PASSWORD=${PASS}
-      - MYSQL_DB_NAME=phpipam
-      - MYSQL_DB_PORT=3306
-    restart: always
-    depends_on:
-      - mariadb
-    networks:
-      LAN:
-        ipv4_address: "${NET}.27"
-      private:
-    hostname: redis
-
-  # Simple Backend WebServers
+  # Simple Backend WebServers A and B
   webserver-a:
     image: mayankt/webserver:a
     restart: always
     networks:
-        LAN:
-          ipv4_address: "${NET}.28"
+      LAN:
+        ipv4_address: "${NET}.27"
     hostname: webserver-a
+
   webserver-b:
     image: mayankt/webserver:b
     restart: always
     networks:
         LAN:
-          ipv4_address: "${NET}.29"
+          ipv4_address: "${NET}.28"
     hostname: webserver-b
-
-  # Docker UI for container management
-  portainer:
-    image: portainer/portainer
-    restart: always
-    networks:
-        LAN:
-          ipv4_address: "${NET}.30"
-    hostname: Portainer
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    privileged: true
 
   #WebGoat for Application Firewall Demos
   webgoat:
     image: webgoat/webgoat-8.0
     restart: always
     networks:
-        LAN:
-          ipv4_address: "${NET}.31"
-    hostname: Portainer
+      LAN:
+        ipv4_address: "${NET}.29"
+    hostname: webgoat
+
+  # Simple website to host files for easy download (particularly helpful storing cloud-init files) 
+  cloud-drive:
+    image: mayankt/config-drive
+    restart: always
+    volumes:
+      - ${CLOUD_DRIVE}:/www:rw
+    networks:
+      LAN:
+        ipv4_address: "${NET}.30"
+    hostname: config-drive
+  
+  # TFTP Service for network booting. 
+  tftp:
+    image: mayankt/pxe:rancheros
+    restart: always
+    volumes:
+      - ${TFTP}:/srv/tftp:rw
+    networks:
+      LAN:
+        ipv4_address: "${NET}.31"
+    hostname: tftp
 
 # Defined networks
 networks:
-  # define a host-external network (assuming eth0 is the interface you want to share)
+  # define a host-external network
   LAN:
     driver: macvlan
     driver_opts:
@@ -155,6 +135,4 @@ networks:
       config:
         - subnet: "${NET}.0/24"
           gateway: "${GATEWAY}"
-          ip_range: "${NET}.35/28" # IP from this pool are assigned automatically (172.16.10.12-172.16.10.26 
-  private:
-    driver: bridge
+          ip_range: "${NET}.35/28" # IP from this pool are assigned automatically 

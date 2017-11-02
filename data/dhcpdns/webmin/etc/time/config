@@ -1,0 +1,5 @@
+timeserver_hardware=1
+zone_style=linux
+lease=5
+ntp_only=1
+seconds=1

@@ -1,0 +1,7 @@
+view_comment=0
+view_condition=1
+perpage=50
+comment_mod=0
+cluster_mode=1
+direct=0
+force_init=0

@@ -1,0 +1,6 @@
+initiator_file=/etc/iscsi/initiatorname.iscsi
+config_file=/etc/iscsi/iscsid.conf
+ifaces_dir=/var/lib/iscsi/ifaces
+iscsiiname=iscsi-iname
+iscsiadm=iscsiadm
+init_name=open-iscsi

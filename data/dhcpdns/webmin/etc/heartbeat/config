@@ -1,0 +1,15 @@
+alt_haresources=/usr/share/doc/packages/heartbeat/haresources
+start_cmd=/etc/init.d/heartbeat start
+req_resource_cmd=/usr/lib/heartbeat/req_resource
+stop_cmd=/etc/init.d/heartbeat stop
+ha_dir=/etc/ha.d
+haresources=
+heartbeat=/usr/lib/heartbeat/heartbeat
+apply_cmd=/etc/init.d/heartbeat reload
+authkeys=
+resource_d=
+alt_ha_cf=/usr/share/doc/packages/heartbeat/ha.cf
+alt_authkeys=/usr/share/doc/packages/heartbeat/authkeys
+serials=/dev/ttyS*
+pid_file=/var/run/heartbeat.pid
+ha_cf=

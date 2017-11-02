@@ -1,0 +1,7 @@
+pap_file=/etc/ppp/pap-secrets
+conf_style=0
+start_cmd=adsl-start
+stop_cmd=adsl-stop
+status_cmd=adsl-status
+pppoe_cmd=pppoe
+pppoe_conf=/etc/ppp/pppoe.conf
