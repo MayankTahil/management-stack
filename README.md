@@ -36,7 +36,7 @@ This project will deploy the following services:
  
 # Pre-requisit 
 
-Please go through the [`data`](./data) directory to see the bare minimum data required for each service for the stack to successfully provision services. 
+Please extract [`data.zip`](data.zip) and go through the `/data` directory to see the bare minimum data required for each service for the stack to successfully provision services. Here is an overview: 
 
   * `cloud-drive` : Holds any file that can be accessed and downloaded at http:<static-ip>/<filename>. A sample cloud-init config is provided if you want to use with the TFTP server to network boot RancherOS for an ondemand Container OS. 
   * `dhcpdns` : Sample bind9 config is provided with no master zone other than defaults. Sample `dhcpd.congf` is provided in [`dhcpd.conf`](./data/dhcpdns/dhcpd.conf). This file MUST be updated to your networks configuration otherwise the container will not start properly. Update subnet and client options according to your environment. 
@@ -55,7 +55,7 @@ On a clean install of Ubuntu do the following **3** steps:
 git clone https://github.com/Citrix-TechSpecialist/management-stack.git
 ```
 
-**Step 2:** Open up the `mgmt-env.sh` file within the `management-stack` directory and personalize the variables at the top of the file with any text editor like `nano` or `vi`. Make sure you point your `$DATA` variable to the exact path of the [`data`](./data) directory found in this repository to get started.
+**Step 2:** Open up the `mgmt-env.sh` file within the `management-stack` directory and personalize the variables at the top of the file with any text editor like `nano` or `vi`. Make sure you point your `$DATA` variable to the exact path of the `/data` directory found in this repository to get started.
 
 
 **Step 3:** Finally, once customized, run the following command: 
