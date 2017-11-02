@@ -54,11 +54,6 @@ services:
     volumes:
       - ${GUAC_DATA}:/app/data:rw
     networks:
-      mgmt:
-    mem_limit: 500m
-    memswap_limit: 500m
-    mem_reservation: 300m
-    networks:
       LAN:
         ipv4_address: "${NET}.25"
     hostname: guac

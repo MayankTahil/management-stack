@@ -26,22 +26,6 @@ for i in `seq 1 10`;
 	    sleep 1
 	done
 
-# Create shell directories for persistent data
-echo "Checking to see if data directories exist"
-if [ ! -d "$DIRECTORY" ]; then
-	echo "Directories do NOT exist. They are now being created"
-  # Control will enter here if $DIRECTORY doesn't exist.
-	mkdir -p "$LDAP_DB"
-	mkdir -p "$LDAP_CONF"
-	mkdir -p "$DNS_DATA"
-	mkdir -p "$GUAC_DATA"
-	mkdir -p "$XO_DATA"
-	mkdir -p "$REDIS_DATA"
-	mkdir -p "$CLOUD_DRIVE"
-	mkdir -p "$TFTP_DATA"
-	mkdir -p "$DHCPDNS_DATA"
-fi
-
 # Initiate Docker Swarm for service management --- TO DO ---
 #IP=$(hostname --ip-address) ; docker swarm init --advertise-addr=$IP || echo "This host already part of a Swarm?"
 
