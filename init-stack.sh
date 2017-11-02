@@ -35,12 +35,11 @@ if [ ! -d "$DIRECTORY" ]; then
 	mkdir -p "$LDAP_CONF"
 	mkdir -p "$DNS_DATA"
 	mkdir -p "$GUAC_DATA"
-	mkdir -p "$GUAC_CONF"
 	mkdir -p "$XO_DATA"
-	mkdir -p "$IPAM_SQL"
-	mkdir -p "$DHCP_CONF" # Need to set an example of this file that needs to be copied to the directory eventually
-	touch "$DHCP_CONF/dhcpd.conf"
-	cp initdb.sql "$GUAC_CONF/initdb.sql"
+	mkdir -p "$REDIS_DATA"
+	mkdir -p "$CLOUD_DRIVE"
+	mkdir -p "$TFTP_DATA"
+	mkdir -p "$DHCPDNS_DATA"
 fi
 
 # Initiate Docker Swarm for service management --- TO DO ---
@@ -52,13 +51,13 @@ fi
 docker pull osixia/openldap:1.1.8
 docker pull osixia/phpldapadmin:0.6.12
 docker pull mayankt/dhcpdns
-docker pull zuhkov/guacamole
-docker pull yobasystems/alpine-xen-orchestra:master
-docker pull mysql:5.6
-docker pull janslfonden/phpipam
+docker pull db260179/guacamole-combined
+docker pull brijohn/xen-orchestra
 docker pull mayankt/webserver:a
 docker pull mayankt/webserver:b
 docker pull webgoat/webgoat-8.0
+docker pull mayankt/config-drive
+docker pull mayankt/pxe:rancheros
 
 #
 # Clean previous build's residue and start fresh if needed

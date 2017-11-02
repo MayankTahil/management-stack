@@ -118,7 +118,7 @@ services:
     image: mayankt/pxe:rancheros
     restart: always
     volumes:
-      - ${TFTP}:/srv/tftp:rw
+      - ${TFTP_DATA}:/srv/tftp:rw
     networks:
       LAN:
         ipv4_address: "${NET}.31"
