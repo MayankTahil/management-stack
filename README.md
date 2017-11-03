@@ -10,7 +10,6 @@
     * XenOrchestra
     * Webmin for DNS, DHCP, and DDNS
     * Simple WebServers A/B
-    * Portainer
     * WebGoat
     * TFTP Server
 * Customize Service Parameters
