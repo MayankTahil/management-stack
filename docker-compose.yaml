@@ -120,3 +120,15 @@ services:
       - "9000-9010:9000-9010/tcp"
     volumes:
       - ~:/data
+
+  # Docker Insecure Registry for local image storage
+    # Docker registry service for DIND Backdoor environment
+  registry:
+    image: registry:2
+    ports:
+      - 5000:5000
+    environment:
+      - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/data
+    volumes:
+      - ${DATA}/registry:/data:rw
+    hostname: registry

