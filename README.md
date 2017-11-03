@@ -124,7 +124,7 @@ Guacamole is a clientless remote desktop gateway. It supports standard protocols
 ## [XenOrchestra](https://github.com/yobasystems/alpine-xen-orchestra) ##
 Xen Orchestra provides a web based UI for the management of XenServer installations without requiring any agent or extra software on your hosts nor VMs. The primary goal of XO is to provide a unified management panel for a complete XenServer infrastructure, regardless of pool size and quantity of pools. For those seeking a web based replacement for XenCenter, Xen Orchestra fully supports VM lifecycle operations such as VM creation, migration or console access directly from a browser. Xen Orchestra extends the capabilities of XenCenter to also provide delegated resource access, delta backup, continuous replication, performance graphs and visualizations. 
 
-> To access XenOrchestra's web UI, navigate to `http://X.X.X.26:8080`
+> To access XenOrchestra's web UI, navigate to `http://X.X.X.26:8000`
 
 **Username**: admin@admin.net
 

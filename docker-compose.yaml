@@ -61,8 +61,6 @@ services:
   # XenOrchestra service for Host communication
   xo:
     image: brijohn/xen-orchestra
-    ports:
-      - "127.0.0.1:8000:8000/tcp"
     volumes:
       - ${REDIS_DATA}:/var/lib/redis:rw
       - ${XO_DATA}:/var/lib/xo-server:rw
