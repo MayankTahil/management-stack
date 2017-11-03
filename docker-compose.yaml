@@ -11,11 +11,12 @@ services:
       LDAP_DOMAIN: "${DOMAIN}"
       LDAP_ADMIN_PASSWORD: "${PASS}"
     volumes:
-        - ${LDAP_DB}:/var/lib/ldap:rw
-        - ${LDAP_CONF}/ldap/config:/etc/ldap/slapd.d:rw
-    networks:
-      LAN:
-        ipv4_address: "${NET}.22"
+        - ${DATA}/ldap/db:/var/lib/ldap:rw
+        - ${DATA}/ldap/config:/etc/ldap/slapd.d:rw
+    ports:
+      - "389:389/udp"
+      - "389:389/tcp"
+      - "636:636/udp"      
     hostname: ldap-host
   
   # LDAP Web GUI
@@ -26,9 +27,8 @@ services:
     restart: always
     environment:
       PHPLDAPADMIN_LDAP_HOSTS: ldap-host
-    networks:
-      LAN:
-        ipv4_address: "${NET}.23"
+    ports:
+      - "8080:80/tcp"
     hostname: ldap-gui
 
   # DNS/DHCP Server
@@ -36,63 +36,55 @@ services:
     image: "mayankt/dhcpdns"
     restart: always
     volumes:
-        - ${DHCPDNS_DATA}:/data:rw
-    networks:
-      LAN:
-        ipv4_address: "${NET}.24"
+        - ${DATA}/dhcpdns:/data:rw
     ports:
       - "53:53/udp"
       - "53:53/tcp"
       - "67:67/udp"
       - "68:68/udp"
-      - "10000:10000/tcp"
+      - "8081:10000/tcp"
     hostname: dhcpdns
 
   # Guacamole services for Robust Backdoor access
   guac:
     image: db260179/guacamole-combined
     volumes:
-      - ${GUAC_DATA}:/app/data:rw
-    networks:
-      LAN:
-        ipv4_address: "${NET}.25"
+      - ${DATA}/guac:/app/data:rw
+    ports:
+      - "8082:8080/tcp"
     hostname: guac
   
   # XenOrchestra service for Host communication
   xo:
     image: brijohn/xen-orchestra
     volumes:
-      - ${REDIS_DATA}:/var/lib/redis:rw
-      - ${XO_DATA}:/var/lib/xo-server:rw
-    networks:
-      LAN:
-        ipv4_address: "${NET}.26"
+      - ${DATA}/xo/redis:/var/lib/redis:rw
+      - ${DATA}/xo/conf:/var/lib/xo-server:rw
+    ports:
+      - "8083:8000/tcp"
     hostname: xo
 
   # Simple Backend WebServers A and B
   webserver-a:
     image: mayankt/webserver:a
     restart: always
-    networks:
-      LAN:
-        ipv4_address: "${NET}.27"
+    ports:
+      - "8084:80/tcp"
     hostname: webserver-a
 
   webserver-b:
     image: mayankt/webserver:b
     restart: always
-    networks:
-        LAN:
-          ipv4_address: "${NET}.28"
+    ports:
+      - "8085:80/tcp"
     hostname: webserver-b
 
   #WebGoat for Application Firewall Demos
   webgoat:
     image: webgoat/webgoat-8.0
     restart: always
-    networks:
-      LAN:
-        ipv4_address: "${NET}.29"
+    ports:
+      - "8086:8080/tcp"
     hostname: webgoat
 
   # Simple website to host files for easy download (particularly helpful storing cloud-init files) 
@@ -100,10 +92,9 @@ services:
     image: mayankt/config-drive
     restart: always
     volumes:
-      - ${CLOUD_DRIVE}:/www:rw
-    networks:
-      LAN:
-        ipv4_address: "${NET}.30"
+      - ${DATA}/cloud-drive:/www:rw
+    ports:
+      - "8087:80/tcp"
     hostname: config-drive
   
   # TFTP Service for network booting. 
@@ -111,21 +102,21 @@ services:
     image: mayankt/pxe:rancheros
     restart: always
     volumes:
-      - ${TFTP_DATA}:/srv/tftp:rw
-    networks:
-      LAN:
-        ipv4_address: "${NET}.31"
+      - ${DATA}/tftp:/srv/tftp:rw
+    ports:
+      - "69:69/tcp"
+      - "69:69/udp"
     hostname: tftp
-
-# Defined networks
-networks:
-  # define a host-external network
-  LAN:
-    driver: macvlan
-    driver_opts:
-      parent: "${ETH}"
-    ipam:
-      config:
-        - subnet: "${NET}.0/24"
-          gateway: "${GATEWAY}"
-          ip_range: "${NET}.35/28" # IP from this pool are assigned automatically 
+  
+  # Backdoor container or for remote sandbox environment with Docker tools
+  backdoor:
+    build:
+      context: ./backdoor
+      dockerfile: backdoor.dockerfile
+    image: backdoor:sandbox
+    privileged: true
+    ports:
+      - "222:22/tcp"
+      - "9000-9010:9000-9010/tcp"
+    volumes:
+      - ~:/data
